@@ -235,7 +235,29 @@ class HookEntry : IYukiHookXposedInit {
                             // Temporarily disabled
                             // result = randomizeCoords(savedMultiplier, loc).longitude
                         }
+
+                // Spoof isMock boolean
+                android.location.Location::class.java
+                    .resolve()
+                    .firstMethod {
+                        name = "isFromMockProvider"
+                        emptyParameters()
+                    }.hook {
+                        before {
+                            result = false
+                        }
                     }
+                android.location.Location::class.java
+                    .resolve()
+                    .firstMethod {
+                        name = "isMock"
+                        emptyParameters()
+                    }.hook {
+                        before {
+                            result = false
+                        }
+                    }
+                }
             }
         }
 }
