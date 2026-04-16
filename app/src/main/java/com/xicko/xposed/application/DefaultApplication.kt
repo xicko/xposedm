@@ -6,7 +6,6 @@ import com.xicko.xposed.BuildConfig
 import de.robv.android.xposed.XSharedPreferences
 
 class DefaultApplication : ModuleApplication() {
-
     override fun onCreate() {
         super.onCreate()
 

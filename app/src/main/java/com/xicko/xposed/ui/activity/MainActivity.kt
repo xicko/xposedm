@@ -22,8 +22,6 @@ import androidx.core.view.setPadding
 import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import com.google.android.material.textfield.TextInputEditText
-import com.xicko.xposed.BuildConfig
-import com.xicko.xposed.R
 import com.highcapable.betterandroid.system.extension.component.disableComponent
 import com.highcapable.betterandroid.system.extension.component.enableComponent
 import com.highcapable.betterandroid.system.extension.component.isComponentEnabled
@@ -48,14 +46,15 @@ import com.highcapable.hikage.widget.com.xicko.xposed.ui.view.MaterialSwitch
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.highcapable.yukihookapi.hook.factory.modulePrefs
 import com.highcapable.yukihookapi.hook.factory.prefs
+import com.xicko.xposed.BuildConfig
+import com.xicko.xposed.R
 import com.xicko.xposed.constants.DEFAULT_LAT
 import com.xicko.xposed.constants.DEFAULT_LNG
 import com.xicko.xposed.constants.HookPrefs
 import android.R as Android_R
 
 class MainActivity : AppViewsActivity() {
-
-    private val homeComponent by lazy { ComponentName(packageName, "${BuildConfig.APPLICATION_ID}.Home") } 
+    private val homeComponent by lazy { ComponentName(packageName, "${BuildConfig.APPLICATION_ID}.Home") }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +62,12 @@ class MainActivity : AppViewsActivity() {
         // Base activity background
         findViewById<View>(Android_R.id.content).setBackgroundResource(R.color.colorThemeBackground)
 
-        org.osmdroid.config.Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context))
-        org.osmdroid.config.Configuration.getInstance().userAgentValue = context?.packageName
+        org.osmdroid.config.Configuration
+            .getInstance()
+            .load(context, PreferenceManager.getDefaultSharedPreferences(context))
+        org.osmdroid.config.Configuration
+            .getInstance()
+            .userAgentValue = context?.packageName
 
         // UI view based on Hikage DSL
         // See: https://github.com/BetterAndroid/Hikage
@@ -75,7 +78,7 @@ class MainActivity : AppViewsActivity() {
                 lparams = LayoutParams(matchParent = true),
                 init = {
                     orientation = LinearLayout.VERTICAL
-                }
+                },
             ) {
                 LinearLayout(
                     lparams = LayoutParams(widthMatchParent = true),
@@ -83,12 +86,13 @@ class MainActivity : AppViewsActivity() {
                         gravity = Gravity.CENTER or Gravity.START
                         updatePadding(horizontal = 15.dp)
                         updatePadding(top = 13.dp, bottom = 5.dp)
-                    }
+                    },
                 ) {
                     TextView(
-                        lparams = LayoutParams {
-                            weight = 1f
-                        }
+                        lparams =
+                            LayoutParams {
+                                weight = 1f
+                            },
                     ) {
                         isSingleLine = true
                         text = getString(R.string.app_name)
@@ -97,9 +101,10 @@ class MainActivity : AppViewsActivity() {
                         updateTypeface(Typeface.BOLD)
                     }
                     ImageView(
-                        lparams = LayoutParams(27.dp, 27.dp) {
-                            marginEnd = 5.dp
-                        }
+                        lparams =
+                            LayoutParams(27.dp, 27.dp) {
+                                marginEnd = 5.dp
+                            },
                     ) {
                         background = getThemeAttrsDrawable(Android_R.attr.selectableItemBackgroundBorderless)
                         alpha = 0.85f
@@ -111,28 +116,34 @@ class MainActivity : AppViewsActivity() {
                     }
                 }
                 LinearLayout(
-                    lparams = LayoutParams(widthMatchParent = true) {
-                        updateMargins(horizontal = 15.dp)
-                        updateMargins(top = 10.dp, bottom = 5.dp)
-                    },
+                    lparams =
+                        LayoutParams(widthMatchParent = true) {
+                            updateMargins(horizontal = 15.dp)
+                            updateMargins(top = 10.dp, bottom = 5.dp)
+                        },
                     init = {
                         gravity = Gravity.CENTER or Gravity.START
-                        setBackgroundResource(when {
-                            YukiHookAPI.Status.isXposedModuleActive -> R.drawable.bg_green_round
-                            else -> R.drawable.bg_dark_round
-                        })
-                    }
+                        setBackgroundResource(
+                            when {
+                                YukiHookAPI.Status.isXposedModuleActive -> R.drawable.bg_green_round
+                                else -> R.drawable.bg_dark_round
+                            },
+                        )
+                    },
                 ) {
                     ImageView(
-                        lparams = LayoutParams(25.dp, 25.dp) {
-                            marginStart = 25.dp
-                            marginEnd = 5.dp
-                        }
+                        lparams =
+                            LayoutParams(25.dp, 25.dp) {
+                                marginStart = 25.dp
+                                marginEnd = 5.dp
+                            },
                     ) {
-                        setImageResource(when {
-                            YukiHookAPI.Status.isXposedModuleActive -> R.mipmap.ic_success
-                            else -> R.mipmap.ic_warn
-                        })
+                        setImageResource(
+                            when {
+                                YukiHookAPI.Status.isXposedModuleActive -> R.mipmap.ic_success
+                                else -> R.mipmap.ic_warn
+                            },
+                        )
                         imageTintList = stateColorResource(R.color.white)
                     }
                     LinearLayout(
@@ -140,30 +151,35 @@ class MainActivity : AppViewsActivity() {
                         init = {
                             orientation = LinearLayout.VERTICAL
                             updatePadding(horizontal = 20.dp, vertical = 10.dp)
-                        }
+                        },
                     ) {
                         TextView(
-                            lparams = LayoutParams { 
-                                bottomMargin = 5.dp
-                            }
-                        ) { 
+                            lparams =
+                                LayoutParams {
+                                    bottomMargin = 5.dp
+                                },
+                        ) {
                             isSingleLine = true
                             ellipsize = TextUtils.TruncateAt.END
                             textColor = colorResource(R.color.white)
                             textSize = 18f
-                            text = stringResource(when {
-                                YukiHookAPI.Status.isXposedModuleActive -> R.string.module_is_activated
-                                else -> R.string.module_not_activated
-                            })
+                            text =
+                                stringResource(
+                                    when {
+                                        YukiHookAPI.Status.isXposedModuleActive -> R.string.module_is_activated
+                                        else -> R.string.module_not_activated
+                                    },
+                                )
                         }
                         LinearLayout(
-                            lparams = LayoutParams {
-                                bottomMargin = 5.dp
-                            },
+                            lparams =
+                                LayoutParams {
+                                    bottomMargin = 5.dp
+                                },
                             init = {
                                 gravity = Gravity.CENTER or Gravity.START
-                            }
-                        ) { 
+                            },
+                        ) {
                             TextView {
                                 alpha = 0.8f
                                 isSingleLine = true
@@ -173,9 +189,10 @@ class MainActivity : AppViewsActivity() {
                                 text = stringResource(R.string.module_version, BuildConfig.VERSION_NAME)
                             }
                             TextView(
-                                lparams = LayoutParams { 
-                                    leftMargin = 5.dp
-                                }
+                                lparams =
+                                    LayoutParams {
+                                        leftMargin = 5.dp
+                                    },
                             ) {
                                 setBackgroundResource(R.drawable.bg_orange_round)
                                 updatePadding(horizontal = 5.dp, vertical = 2.dp)
@@ -187,63 +204,70 @@ class MainActivity : AppViewsActivity() {
                             }
                         }
                         TextView(
-                            lparams = LayoutParams { 
-                                topMargin = 5.dp
-                            }
+                            lparams =
+                                LayoutParams {
+                                    topMargin = 5.dp
+                                },
                         ) {
                             alpha = 0.6f
                             isSingleLine = true
                             ellipsize = TextUtils.TruncateAt.END
                             textColor = colorResource(R.color.white)
                             textSize = 11f
-                            text = if (YukiHookAPI.Status.Executor.apiLevel > 0)
-                                "Activated by ${YukiHookAPI.Status.Executor.name} API ${YukiHookAPI.Status.Executor.apiLevel}"
-                            else "Activated by ${YukiHookAPI.Status.Executor.name}"
+                            text =
+                                if (YukiHookAPI.Status.Executor.apiLevel > 0) {
+                                    "Activated by ${YukiHookAPI.Status.Executor.name} API ${YukiHookAPI.Status.Executor.apiLevel}"
+                                } else {
+                                    "Activated by ${YukiHookAPI.Status.Executor.name}"
+                                }
                             isVisible = YukiHookAPI.Status.isXposedModuleActive
                         }
                     }
                 }
                 NestedScrollView(
-                    lparams = LayoutParams(matchParent = true) {
-                        updateMargins(vertical = 10.dp)
-                    },
+                    lparams =
+                        LayoutParams(matchParent = true) {
+                            updateMargins(vertical = 10.dp)
+                        },
                     init = {
                         isFillViewport = true
                         isVerticalFadingEdgeEnabled = true
-                    }
+                    },
                 ) {
                     LinearLayout(
                         lparams = LayoutParams(widthMatchParent = true),
                         init = {
                             orientation = LinearLayout.VERTICAL
-                        }
+                        },
                     ) {
                         LinearLayout(
-                            lparams = LayoutParams(widthMatchParent = true) {
-                                updateMargins(horizontal = 15.dp)
-                            },
+                            lparams =
+                                LayoutParams(widthMatchParent = true) {
+                                    updateMargins(horizontal = 15.dp)
+                                },
                             init = {
                                 orientation = LinearLayout.VERTICAL
                                 gravity = Gravity.CENTER or Gravity.START
                                 setBackgroundResource(R.drawable.bg_permotion_round)
                                 updatePadding(left = 15.dp, top = 15.dp, right = 15.dp)
-                            }
+                            },
                         ) {
                             LinearLayout(
                                 lparams = LayoutParams(widthMatchParent = true),
                                 init = {
                                     gravity = Gravity.CENTER or Gravity.START
-                                }
+                                },
                             ) {
                                 ImageView(
-                                    lparams = LayoutParams(15.dp, 15.dp) {
-                                        marginEnd = 10.dp
-                                    }
+                                    lparams =
+                                        LayoutParams(15.dp, 15.dp) {
+                                            marginEnd = 10.dp
+                                        },
                                 ) {
                                     setImageResource(R.mipmap.ic_home)
                                 }
                                 TextView(
-                                    lparams = LayoutParams(widthMatchParent = true)
+                                    lparams = LayoutParams(widthMatchParent = true),
                                 ) {
                                     alpha = 0.85f
                                     isSingleLine = true
@@ -253,7 +277,7 @@ class MainActivity : AppViewsActivity() {
                                 }
                             }
                             MaterialSwitch(
-                                lparams = LayoutParams(widthMatchParent = true)
+                                lparams = LayoutParams(widthMatchParent = true),
                             ) {
                                 text = stringResource(R.string.hide_app_icon_on_launcher)
                                 isAllCaps = false
@@ -265,9 +289,10 @@ class MainActivity : AppViewsActivity() {
                                 }
                             }
                             TextView(
-                                lparams = LayoutParams(widthMatchParent = true) {
-                                    bottomMargin = 10.dp
-                                }
+                                lparams =
+                                    LayoutParams(widthMatchParent = true) {
+                                        bottomMargin = 10.dp
+                                    },
                             ) {
                                 alpha = 0.6f
                                 setLineSpacing(6f, 1f)
@@ -276,9 +301,10 @@ class MainActivity : AppViewsActivity() {
                                 textSize = 12f
                             }
                             TextView(
-                                lparams = LayoutParams(widthMatchParent = true) {
-                                    bottomMargin = 10.dp
-                                }
+                                lparams =
+                                    LayoutParams(widthMatchParent = true) {
+                                        bottomMargin = 10.dp
+                                    },
                             ) {
                                 alpha = 0.6f
                                 setLineSpacing(6f, 1f)
@@ -293,9 +319,10 @@ class MainActivity : AppViewsActivity() {
                         // Mock location randomizer multiplier setting
                         lateinit var multiplierInputView: TextInputEditText
                         TextView(
-                            lparams = LayoutParams(widthMatchParent = true) {
-                                bottomMargin = 10.dp
-                            }
+                            lparams =
+                                LayoutParams(widthMatchParent = true) {
+                                    bottomMargin = 10.dp
+                                },
                         ) {
                             alpha = 0.6f
                             setLineSpacing(6f, 1f)
@@ -303,18 +330,21 @@ class MainActivity : AppViewsActivity() {
                             textColor = colorResource(R.color.colorTextDark)
                             textSize = 12f
                         }
-                        multiplierInputView = TextInputEditText(
-                            lparams = LayoutParams(widthMatchParent = true) {
-                                bottomMargin = 10.dp
+                        multiplierInputView =
+                            TextInputEditText(
+                                lparams =
+                                    LayoutParams(widthMatchParent = true) {
+                                        bottomMargin = 10.dp
+                                    },
+                            ) {
+                                setText(this@MainActivity.prefs("hook_settings").get(HookPrefs.MULTIPLIER))
+                                inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
                             }
-                        ) {
-                            setText(this@MainActivity.prefs("hook_settings").get(HookPrefs.MULTIPLIER))
-                            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
-                        }
                         Button(
-                            lparams = LayoutParams(widthMatchParent = true) {
-                                bottomMargin = 10.dp
-                            }
+                            lparams =
+                                LayoutParams(widthMatchParent = true) {
+                                    bottomMargin = 10.dp
+                                },
                         ) {
                             text = "Set"
                             setOnClickListener {
@@ -336,33 +366,35 @@ class MainActivity : AppViewsActivity() {
                         LinearLayout(
                             lparams = LayoutParams(widthMatchParent = true, height = 300.dp),
                             init = {
-                                mapSelectionView = org.osmdroid.views.MapView(context).apply {
-                                    setTileSource(org.osmdroid.tileprovider.tilesource.TileSourceFactory.MAPNIK)
+                                mapSelectionView =
+                                    org.osmdroid.views.MapView(context).apply {
+                                        setTileSource(org.osmdroid.tileprovider.tilesource.TileSourceFactory.MAPNIK)
 
-
-                                    setMultiTouchControls(true)
-                                    controller.setZoom(15.0)
-                                    controller.setCenter(org.osmdroid.util.GeoPoint(DEFAULT_LAT.toDouble(), DEFAULT_LNG.toDouble()))
-                                }
+                                        setMultiTouchControls(true)
+                                        controller.setZoom(15.0)
+                                        controller.setCenter(org.osmdroid.util.GeoPoint(DEFAULT_LAT.toDouble(), DEFAULT_LNG.toDouble()))
+                                    }
 
                                 addView(mapSelectionView)
-                            }
+                            },
                         ) {}
 
                         Space(lparams = LayoutParams(height = 32.dp))
 
                         lateinit var latitudeInput: TextInputEditText
                         lateinit var longitudeInput: TextInputEditText
-                        latitudeInput = TextInputEditText() {
-                            setText(this@MainActivity.prefs("hook_settings").get(HookPrefs.LATITUDE))
-                            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
-                        }
-                        longitudeInput = TextInputEditText() {
-                            setText(this@MainActivity.prefs("hook_settings").get(HookPrefs.LONGITUDE))
-                            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
-                        }
+                        latitudeInput =
+                            TextInputEditText {
+                                setText(this@MainActivity.prefs("hook_settings").get(HookPrefs.LATITUDE))
+                                inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+                            }
+                        longitudeInput =
+                            TextInputEditText {
+                                setText(this@MainActivity.prefs("hook_settings").get(HookPrefs.LONGITUDE))
+                                inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+                            }
 
-                        Button() {
+                        Button {
                             text = "Set"
                             setOnClickListener {
                                 val latitude = latitudeInput.text.toString()
@@ -382,27 +414,29 @@ class MainActivity : AppViewsActivity() {
 
     private fun createPromotionItem(
         @StringRes stringResource: Int,
-        @DrawableRes imageResource: Int
+        @DrawableRes imageResource: Int,
     ) = Hikageable<MarginLayoutParams> {
         LinearLayout(
-            lparams = LayoutParams(widthMatchParent = true) {
-                updateMargins(left = 15.dp, right = 15.dp)
-            },
+            lparams =
+                LayoutParams(widthMatchParent = true) {
+                    updateMargins(left = 15.dp, right = 15.dp)
+                },
             init = {
                 gravity = Gravity.CENTER or Gravity.START
                 setBackgroundResource(R.drawable.bg_permotion_round)
                 setPadding(10.dp)
-            }
+            },
         ) {
             ImageView(
-                lparams = LayoutParams(35.dp, 35.dp) {
-                    marginEnd = 10.dp
-                }
+                lparams =
+                    LayoutParams(35.dp, 35.dp) {
+                        marginEnd = 10.dp
+                    },
             ) {
                 setImageResource(imageResource)
             }
             TextView(
-                lparams = LayoutParams(widthMatchParent = true)
+                lparams = LayoutParams(widthMatchParent = true),
             ) {
                 autoLinkMask = Linkify.WEB_URLS
                 ellipsize = TextUtils.TruncateAt.END
@@ -427,9 +461,11 @@ class MainActivity : AppViewsActivity() {
      * @param isShow whether to display / 是否显示
      */
     private fun hideOrShowLauncherIcon(isShow: Boolean) {
-        if (isShow)
+        if (isShow) {
             packageManager?.enableComponent(homeComponent, PackageManager.DONT_KILL_APP)
-        else packageManager?.disableComponent(homeComponent, PackageManager.DONT_KILL_APP)
+        } else {
+            packageManager?.disableComponent(homeComponent, PackageManager.DONT_KILL_APP)
+        }
     }
 
     /**
