@@ -6,9 +6,9 @@ import com.xicko.xposed.BuildConfig
 import de.robv.android.xposed.XSharedPreferences
 
 class DefaultApplication : ModuleApplication() {
-    override fun onCreate() {
-        super.onCreate()
+	override fun onCreate() {
+		super.onCreate()
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-    }
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+	}
 }
