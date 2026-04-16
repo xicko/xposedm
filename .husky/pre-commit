@@ -1,0 +1,8 @@
+CYAN='\033[1;96m'
+NC='\033[0m'
+
+./gradlew compileDebugKotlin
+echo -e "${CYAN} compileDebugKotlin PASS${NC}"
+
+ktlint --format
+echo -e "${CYAN} ktlint PASS${NC}"

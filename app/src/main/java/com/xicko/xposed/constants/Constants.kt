@@ -2,8 +2,8 @@ package com.xicko.xposed.constants
 
 import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 
-val DEFAULT_LAT = "47.918808693663955"
-val DEFAULT_LNG = "106.91759772866669"
+const val DEFAULT_LAT = "47.918808693663955"
+const val DEFAULT_LNG = "106.91759772866669"
 
 object HookPrefs {
     val LATITUDE = PrefsData("latitude", DEFAULT_LAT)

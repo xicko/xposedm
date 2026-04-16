@@ -1,0 +1,10 @@
+root = true
+
+[*.{kt,kts}]
+ktlint_standard_no-wildcard-imports = disabled
+
+[**/build/**]
+ktlint = disabled
+
+[**/generated/**]
+ktlint = disabled
