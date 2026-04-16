@@ -1,6 +1,10 @@
 root = true
 
 [*.{kt,kts}]
+indent_style = tab
+indent_size = 2
+
+[*.{kt,kts}]
 ktlint_standard_no-wildcard-imports = disabled
 
 [**/build/**]
